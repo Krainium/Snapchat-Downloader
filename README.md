@@ -10,8 +10,20 @@
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-FFFC00?style=for-the-badge&logoColor=black)
 
+### 🔗 Live at [savesnap.vercel.app](https://savesnap.vercel.app/)
+
 <img src="docs/preview.png" alt="Snapchat Downloader preview" width="820" />
 
+</div>
+
+---
+
+## 🎬 It works
+
+Paste a link and the real video previews on its own, ready to download.
+
+<div align="center">
+<img src="docs/live-frontend.png" alt="Snapchat Downloader previewing a real spotlight" width="820" />
 </div>
 
 ---
@@ -68,6 +80,12 @@ snapchat-downloader/
 cd backend
 go run .            # listens on :4446, serves ./public
 ```
+
+The Go server runs on its own, extraction and downloads included.
+
+<div align="center">
+<img src="docs/backend-terminal.png" alt="Snapchat backend running independently" width="760" />
+</div>
 
 **Frontend**
 
