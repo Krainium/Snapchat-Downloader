@@ -167,17 +167,20 @@ func targetMeta(props map[string]any, wantSnap string) map[string]any {
 	return nil
 }
 
+// safeName turns a title into a filesystem safe filename. Reserved characters
+// become spaces, runs of whitespace collapse, and the result is cut on a rune
+// boundary so a trailing emoji is never split into invalid bytes.
 func safeName(s string) string {
 	s = strings.Map(func(r rune) rune {
-		if strings.ContainsRune(`\/:*?"<>|`, r) || r < 32 {
-			return '_'
+		if strings.ContainsRune("\\/:*?\"<>|\u2014\u2013", r) || r < 32 {
+			return ' '
 		}
 		return r
 	}, s)
-	if len(s) > 60 {
-		s = s[:60]
+	s = strings.Join(strings.Fields(s), " ")
+	if r := []rune(s); len(r) > 70 {
+		s = strings.TrimSpace(string(r[:70]))
 	}
-	s = strings.TrimSpace(s)
 	if s == "" {
 		s = "snapchat"
 	}
@@ -266,7 +269,13 @@ func extract(rawURL string) (*Post, error) {
 		id = strings.Trim(res.Request.URL.Path, "/")
 	}
 
-	base := safeName(handle)
+	// Name the file after the title. Fall back to the handle, then a default,
+	// so a snap without a title still downloads with a sensible name.
+	nameSrc := title
+	if strings.TrimSpace(nameSrc) == "" {
+		nameSrc = handle
+	}
+	base := safeName(nameSrc)
 	return &Post{
 		ID:      id,
 		Title:   title,
@@ -278,7 +287,7 @@ func extract(rawURL string) (*Post, error) {
 			URL:      video,
 			Thumb:    thumb,
 			Ext:      "mp4",
-			Filename: base + "_snapchat.mp4",
+			Filename: base + ".mp4",
 		}},
 	}, nil
 }
