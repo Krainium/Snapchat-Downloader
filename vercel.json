@@ -1,12 +1,5 @@
 {
-  "framework": null,
-  "services": {
-    "web": {
-      "root": ".",
-      "entrypoint": "Dockerfile.vercel"
-    }
-  },
-  "rewrites": [
-    { "source": "/(.*)", "destination": { "service": "web" } }
-  ]
+  "buildCommand": "cd frontend && npm ci --no-audit --no-fund && npm run build",
+  "outputDirectory": "frontend/dist",
+  "framework": null
 }
