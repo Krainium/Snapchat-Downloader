@@ -1,5 +1,5 @@
 {
-  "buildCommand": "cd frontend && npm install --no-audit --no-fund && npm run build",
-  "outputDirectory": "frontend/dist",
+  "buildCommand": "npm install --no-audit --no-fund && npm run build",
+  "outputDirectory": "dist",
   "framework": null
 }
